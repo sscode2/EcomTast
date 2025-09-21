@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readify - Premium E-Books Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        /* Books Section */
+        .books-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #333;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            margin: 15px auto;
+        }
+        
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .book-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .book-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .book-cover {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .book-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .book-card:hover .book-cover img {
+            transform: scale(1.05);
+        }
+        
+        .book-info {
+            padding: 20px;
+        }
+        
+        .book-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .book-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #6e8efb;
+            margin-bottom: 15px;
+        }
+        
+        .book-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-buy {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+        }
+        
+        .btn-buy:hover {
+            background: linear-gradient(135deg, #5d7ce0, #9666d3);
+            transform: translateY(-2px);
+        }
+        
+        .btn-details {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-details:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFade 0.3s;
+        }
+        
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: #6e8efb;
+            outline: none;
+        }
+        
+        .form-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .form-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+        }
+        
+        .form-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 15px;
+            right: -50%;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 30px;
+            height: 30px;
+            background: #ddd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-active .step-number {
+            background: #6e8efb;
+        }
+        
+        .step-completed .step-number {
+            background: #4cd964;
+        }
+        
+        .step-text {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .step-active .step-text {
+            color: #6e8efb;
+            font-weight: 500;
+        }
+        
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .btn-prev {
+            background: #f8f9fa;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+        
+        .btn-next, .btn-submit {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+        }
+        
+        .btn-prev:hover {
+            background: #e9ecef;
+        }
+        
+        .btn-next:hover, .btn-submit:hover {
+            background: linear-gradient(135deg, #5d7ce0, #9666d3);
+        }
+        
+        /* Book Details */
+        .book-details {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .book-details-cover {
+            flex: 1;
+            min-width: 200px;
+            margin-right: 20px;
+        }
+        
+        .book-details-cover img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .book-details-info {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .book-details-title {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .book-details-price {
+            font-size: 24px;
+            color: #6e8efb;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .book-details-description {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        
+        .learn-list {
+            margin-bottom: 20px;
+        }
+        
+        .learn-list li {
+            margin-bottom: 10px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .learn-list li i {
+            color: #6e8efb;
+            position: absolute;
+            left: 0;
+            top: 5px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: #6e8efb;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #6e8efb;
+        }
+        
+        .footer-social {
+            display: flex;
+            margin-top: 15px;
+        }
+        
+        .footer-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: #444;
+            color: white;
+            border-radius: 50%;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            background: #6e8efb;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            margin-top: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .book-details {
+                flex-direction: column;
+            }
+            
+            .book-details-cover {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-book-open"></i>
+                    <span>Readify</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Bestsellers</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Your Next Favorite Book</h1>
+            <p>Explore our collection of premium e-books at amazing prices</p>
+        </div>
+    </section>
+
+    <!-- Books Section -->
+    <section class="books-section">
+        <div class="container">
+            <h2 class="section-title">Featured E-Books</h2>
+            <div class="books-grid">
+                <!-- Book 1 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">The Complete Web Development Guide</h3>
+                        <p class="book-price">$24.99</p>
+                        <div class="book-actions">
+                            <button class="btn btn-buy" onclick="openBuyModal('The Complete Web Development Guide')">Buy Now</button>
+                            <button class="btn btn-details" onclick="openDetailsModal(0)">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1536746803623-cef87080c7b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Data Science Fundamentals</h3>
+                        <p class="book-price">$29.99</p>
+                        <div class="book-actions">
+                            <button class="btn btn-buy" onclick="openBuyModal('Data Science Fundamentals')">Buy Now</button>
+                            <button class="btn btn-details" onclick="openDetailsModal(1)">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1592496431122-2349e0fbc666?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Python Programming Mastery</h3>
+                        <p class="book-price">$19.99</p>
+                        <div class="book-actions">
+                            <button class="btn btn-buy" onclick="openBuyModal('Python Programming Mastery')">Buy Now</button>
+                            <button class="btn btn-details" onclick="openDetailsModal(2)">Details</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="book-card">
+                    <div class="book-cover">
+                        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title">Machine Learning Essentials</h3>
+                        <p class="book-price">$34.99</p>
+                        <div class="book-actions">
+                            <button class="btn btn-buy" onclick="openBuyModal('Machine Learning Essentials')">Buy Now</button>
+                            <button class="btn btn-details" onclick="openDetailsModal(3)">Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buy Modal -->
+    <div id="buyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Complete Your Purchase</h2>
+                <button class="close-btn" onclick="closeModal('buyModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-steps">
+                    <div class="form-step step-active">
+                        <div class="step-number">1</div>
+                        <div class="step-text">Personal Info</div>
+                    </div>
+                    <div class="form-step">
+                        <div class="step-number">2</div>
+                        <div class="step-text">Payment</div>
+                    </div>
+                    <div class="form-step">
+                        <div class="step-number">3</div>
+                        <div class="step-text">Confirmation</div>
+                    </div>
+                </div>
+
+                <form id="buyForm">
+                    <div id="step1">
+                        <h3>Personal Information</h3>
+                        <div class="form-group">
+                            <label for="book">Selected Book</label>
+                            <input type="text" id="book" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country" class="form-control" required>
+                                <option value="">Select Country</option>
+                                <option value="usa">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="canada">Canada</option>
+                                <option value="australia">Australia</option>
+                                <option value="germany">Germany</option>
+                            </select>
+                        </div>
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-prev" disabled>Previous</button>
+                            <button type="button" class="btn btn-next" onclick="nextStep(1)">Next</button>
+                        </div>
+                    </div>
+
+                    <div id="step2" style="display: none;">
+                        <h3>Payment Information</h3>
+                        <div class="form-group">
+                            <label for="bank">Select Bank</label>
+                            <select id="bank" class="form-control" required>
+                                <option value="">Select Your Bank</option>
+                                <option value="bank1">Global Bank</option>
+                                <option value="bank2">International Bank</option>
+                                <option value="bank3">Digital Bank</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="account">Account Number</label>
+                            <input type="text" id="account" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="holder">Account Holder Name</label>
+                            <input type="text" id="holder" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount to Pay</label>
+                            <input type="text" id="amount" class="form-control" readonly>
+                        </div>
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-prev" onclick="prevStep(2)">Previous</button>
+                            <button type="button" class="btn btn-next" onclick="nextStep(2)">Next</button>
+                        </div>
+                    </div>
+
+                    <div id="step3" style="display: none;">
+                        <h3>Order Confirmation</h3>
+                        <div class="form-group">
+                            <p>Please review your information before completing the purchase:</p>
+                            <div id="orderSummary"></div>
+                        </div>
+                        <div class="form-navigation">
+                            <button type="button" class="btn btn-prev" onclick="prevStep(3)">Previous</button>
+                            <button type="submit" class="btn btn-submit">Complete Purchase</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Book Details</h2>
+                <button class="close-btn" onclick="closeModal('detailsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="book-details">
+                    <div class="book-details-cover">
+                        <img id="detailCover" src="" alt="Book Cover">
+                    </div>
+                    <div class="book-details-info">
+                        <h2 id="detailTitle" class="book-details-title"></h2>
+                        <p id="detailPrice" class="book-details-price"></p>
+                        <p id="detailDescription" class="book-details-description"></p>
+                        
+                        <h3>What You'll Learn</h3>
+                        <ul id="learnList" class="learn-list"></ul>
+                        
+                        <button class="btn btn-buy" id="detailBuyBtn">Buy Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Readify</h3>
+                    <p>We provide high-quality e-books on various topics to help you learn and grow. Our collection is curated by experts in each field.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Categories</a></li>
+                        <li><a href="#">Bestsellers</a></li>
+                        <li><a href="#">New Releases</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 Readify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Book data
+        const books = [
+            {
+                title: "The Complete Web Development Guide",
+                price: "$24.99",
+                cover: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                description: "A comprehensive guide to modern web development covering HTML, CSS, JavaScript, and popular frameworks.",
+                learnings: [
+                    "HTML5 and semantic markup",
+                    "CSS3 and responsive design",
+                    "JavaScript and ES6 features",
+                    "Frontend frameworks like React",
+                    "Backend development with Node.js",
+                    "Database integration and deployment"
+                ]
+            },
+            {
+                title: "Data Science Fundamentals",
+                price: "$29.99",
+                cover: "https://images.unsplash.com/photo-1536746803623-cef87080c7b2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                description: "Learn the fundamentals of data science, from data collection to analysis and visualization.",
+                learnings: [
+                    "Data collection and cleaning techniques",
+                    "Statistical analysis methods",
+                    "Data visualization principles",
+                    "Machine learning basics",
+                    "Python for data science",
+                    "Working with large datasets"
+                ]
+            },
+            {
+                title: "Python Programming Mastery",
+                price: "$19.99",
+                cover: "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                description: "Master Python programming from basics to advanced concepts with practical examples.",
+                learnings: [
+                    "Python syntax and basic constructs",
+                    "Object-oriented programming in Python",
+                    "Working with files and databases",
+                    "Web scraping with Python",
+                    "Building web applications with Flask",
+                    "Automation and scripting tasks"
+                ]
+            },
+            {
+                title: "Machine Learning Essentials",
+                price: "$34.99",
+                cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                description: "Essential machine learning concepts and algorithms with hands-on projects.",
+                learnings: [
+                    "Supervised and unsupervised learning",
+                    "Regression and classification algorithms",
+                    "Neural networks and deep learning",
+                    "Natural language processing",
+                    "Model evaluation and optimization",
+                    "Real-world ML project implementation"
+                ]
+            }
+        ];
+
+        // Current selected book for purchase
+        let currentBook = "";
+
+        // Open buy modal
+        function openBuyModal(bookTitle) {
+            currentBook = bookTitle;
+            document.getElementById('book').value = bookTitle;
+            
+            // Set the amount based on the book
+            const book = books.find(b => b.title === bookTitle);
+            if (book) {
+                document.getElementById('amount').value = book.price;
+            }
+            
+            // Reset form to first step
+            document.getElementById('step1').style.display = 'block';
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step3').style.display = 'none';
+            
+            // Update step indicators
+            const steps = document.querySelectorAll('.form-step');
+            steps.forEach((step, index) => {
+                step.classList.remove('step-active', 'step-completed');
+                if (index === 0) step.classList.add('step-active');
+            });
+            
+            document.getElementById('buyModal').style.display = 'block';
+        }
+
+        // Open details modal
+        function openDetailsModal(bookIndex) {
+            const book = books[bookIndex];
+            document.getElementById('detailTitle').textContent = book.title;
+            document.getElementById('detailPrice').textContent = book.price;
+            document.getElementById('detailDescription').textContent = book.description;
+            document.getElementById('detailCover').src = book.cover;
+            
+            // Clear previous learnings
+            const learnList = document.getElementById('learnList');
+            learnList.innerHTML = '';
+            
+            // Add learnings
+            book.learnings.forEach(learning => {
+                const li = document.createElement('li');
+                li.innerHTML = `<i class="fas fa-check-circle"></i> ${learning}`;
+                learnList.appendChild(li);
+            });
+            
+            // Set up buy button
+            document.getElementById('detailBuyBtn').onclick = function() {
+                closeModal('detailsModal');
+                openBuyModal(book.title);
+            };
+            
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Next step in form
+        function nextStep(currentStep) {
+            // Validate current step
+            if (currentStep === 1) {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                const country = document.getElementById('country').value;
+                
+                if (!name || !email || !phone || !country) {
+                    alert('Please fill all required fields');
+                    return;
+                }
+            } else if (currentStep === 2) {
+                const bank = document.getElementById('bank').value;
+                const account = document.getElementById('account').value;
+                const holder = document.getElementById('holder').value;
+                
+                if (!bank || !account || !holder) {
+                    alert('Please fill all required fields');
+                    return;
+                }
+                
+                // Prepare order summary
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const book = document.getElementById('book').value;
+                const amount = document.getElementById('amount').value;
+                
+                document.getElementById('orderSummary').innerHTML = `
+                    <p><strong>Book:</strong> ${book}</p>
+                    <p><strong>Amount:</strong> ${amount}</p>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                `;
+            }
+            
+            // Hide current step
+            document.getElementById(`step${currentStep}`).style.display = 'none';
+            
+            // Show next step
+            document.getElementById(`step${currentStep + 1}`).style.display = 'block';
+            
+            // Update step indicators
+            const steps = document.querySelectorAll('.form-step');
+            steps[currentStep - 1].classList.remove('step-active');
+            steps[currentStep - 1].classList.add('step-completed');
+            steps[currentStep].classList.add('step-active');
+        }
+
+        // Previous step in form
+        function prevStep(currentStep) {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).style.display = 'none';
+            
+            // Show previous step
+            document.getElementById(`step${currentStep - 1}`).style.display = 'block';
+            
+            // Update step indicators
+            const steps = document.querySelectorAll('.form-step');
+            steps[currentStep - 1].classList.remove('step-active');
+            steps[currentStep - 2].classList.add('step-active');
+        }
+
+        // Form submission
+        document.getElementById('buyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Purchase completed successfully! Thank you for your order.');
+            closeModal('buyModal');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
